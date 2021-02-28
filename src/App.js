@@ -6,69 +6,44 @@ import VisibileContacts from './Components/VisibileContacts';
 class App extends Component {
   state = {
     contacts: [],
-    name: '',
-    number: '',
     filter: '',
   };
 
-  handleContactFinder = e => {
-    this.setState({
-      filter: e.target.value,
-    });
-  };
-
-  handleChange = e => {
-    const { name, number, value } = e.target;
-    this.setState({
-      [name]: value,
-      [number]: value,
-    });
-  };
-
-  findContact = () => {
-    const { contacts } = this.state;
-    const filtered = contacts.filter(
-      contact => contact.name === this.state.filter,
-    );
-    return filtered;
-  };
-
-  hanldesubmit = e => {
-    e.preventDefault();
-
-    const { name } = this.state;
-    const { number } = this.state;
-
+  formSubmitHandler = data => {
     const newContact = {
-      name,
+      name: data.name,
+      number: data.number,
       id: Date.now(),
-      number,
     };
+
+    const { contacts } = this.state;
+    if (contacts.find(contact => contact.name === newContact.name)) {
+      return alert('такой контакт существует');
+    }
 
     this.setState(prevState => {
       return { contacts: [newContact, ...prevState.contacts] };
     });
   };
 
+  deleteContact = contactId => {
+    console.log(contactId);
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
+
   render() {
     const data = this.state.contacts;
-    const filterContact = this.state.filter;
 
     return (
       <div className="App">
         <h2>Phonebook</h2>
-        <InputForm
-          onChangeName={this.handleChange}
-          onChangeNumber={this.handleChange}
-          onSubmit={this.hanldesubmit}
-          valueName={this.state.name}
-          valueNumber={this.state.number}
-        />
+        <InputForm onSubmit={this.formSubmitHandler} />
         <VisibileContacts
           data={data}
-          onFindContact={this.handleContactFinder}
-          filterContact={this.findContact()}
-          valueFilter={filterContact}
+          contacts={this.state.contacts}
+          delete={this.deleteContact}
         />
       </div>
     );
