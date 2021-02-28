@@ -1,7 +1,12 @@
 import ContactElement from './VisibileContacts/';
 import s from './VisibileContacts.module.scss';
 
-const VisibileContacts = ({ data, onFindContact, filterContact }) => {
+const VisibileContacts = ({
+  data,
+  onFindContact,
+  filterContact,
+  valueFilter,
+}) => {
   return (
     <>
       <h2>Contacts</h2>
@@ -10,6 +15,7 @@ const VisibileContacts = ({ data, onFindContact, filterContact }) => {
         type="text"
         placeholder="enter name"
         onChange={onFindContact}
+        value={valueFilter}
       ></input>
       <p>{filterContact.map(({ name }) => name)}</p>
       <ul className={s.list}>

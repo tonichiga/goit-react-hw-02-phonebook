@@ -11,32 +11,27 @@ class App extends Component {
     filter: '',
   };
 
-  handleAddContactName = e => {
-    this.setState({
-      name: e.target.value,
-    });
-  };
-
-  handleAddContactNumber = e => {
-    this.setState({
-      number: e.target.value,
-    });
-  };
   handleContactFinder = e => {
-    const { contacts } = this.state;
-
-    const filtered = contacts.filter(
-      contact => contact.name === e.target.value,
-    );
     this.setState({
-      filter: filtered,
+      filter: e.target.value,
     });
   };
 
-  // findContact = () => {
-  //   const { contacts } = this.state;
-  //   const { filter } = this.state;
-  // };
+  handleChange = e => {
+    const { name, number, value } = e.target;
+    this.setState({
+      [name]: value,
+      [number]: value,
+    });
+  };
+
+  findContact = () => {
+    const { contacts } = this.state;
+    const filtered = contacts.filter(
+      contact => contact.name === this.state.filter,
+    );
+    return filtered;
+  };
 
   hanldesubmit = e => {
     e.preventDefault();
@@ -58,19 +53,22 @@ class App extends Component {
   render() {
     const data = this.state.contacts;
     const filterContact = this.state.filter;
-    console.log(filterContact);
+
     return (
       <div className="App">
         <h2>Phonebook</h2>
         <InputForm
-          onChangeName={this.handleAddContactName}
-          onChangeNumber={this.handleAddContactNumber}
+          onChangeName={this.handleChange}
+          onChangeNumber={this.handleChange}
           onSubmit={this.hanldesubmit}
+          valueName={this.state.name}
+          valueNumber={this.state.number}
         />
         <VisibileContacts
           data={data}
           onFindContact={this.handleContactFinder}
-          filterContact={this.state.filter}
+          filterContact={this.findContact()}
+          valueFilter={filterContact}
         />
       </div>
     );
