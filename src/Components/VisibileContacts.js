@@ -8,7 +8,8 @@ class VisibileContacts extends Component {
   };
 
   findContact = () => {
-    const contacts = this.props.contacts;
+    const contacts = this.props.data;
+
     const filtered = contacts.filter(
       contact => contact.name === this.state.filter,
     );

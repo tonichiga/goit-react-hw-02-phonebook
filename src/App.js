@@ -40,11 +40,7 @@ class App extends Component {
       <div className="App">
         <h2>Phonebook</h2>
         <InputForm onSubmit={this.formSubmitHandler} />
-        <VisibileContacts
-          data={data}
-          contacts={this.state.contacts}
-          delete={this.deleteContact}
-        />
+        <VisibileContacts data={data} delete={this.deleteContact} />
       </div>
     );
   }

@@ -8,7 +8,7 @@ class InputForm extends Component {
   };
 
   handleChange = e => {
-    const { name, number, value } = e.target;
+    const { name, value } = e.target;
     this.setState({
       [name]: value,
       // [number]: value,
