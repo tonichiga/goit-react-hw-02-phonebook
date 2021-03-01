@@ -11,7 +11,7 @@ class InputForm extends Component {
     const { name, number, value } = e.target;
     this.setState({
       [name]: value,
-      [number]: value,
+      // [number]: value,
     });
   };
 
@@ -22,11 +22,13 @@ class InputForm extends Component {
       number: '',
     });
   };
+
   hanldesubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state);
     this.reset();
   };
+
   render() {
     return (
       <form onSubmit={this.hanldesubmit}>
